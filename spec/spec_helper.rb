@@ -1,4 +1,4 @@
-require 'sdbm-orm'
+require 'sorm'
 
 GEM_ROOT = File.expand_path("../../", __FILE__)
 $: << GEM_ROOT

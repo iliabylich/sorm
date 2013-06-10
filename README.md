@@ -6,7 +6,7 @@ TODO: Write a gem description
 
 Add this line to your application's Gemfile:
 
-    gem 'sdbm-orm'
+    gem 'sorm'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install sdbm-orm
+    $ gem install sorm
 
 ## Usage
 

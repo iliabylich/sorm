@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SDBM::ORM::Models::Attributes do
+describe SORM::Models::Attributes do
 
   subject(:person) { Person.new }
 

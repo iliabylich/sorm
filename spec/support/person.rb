@@ -1,4 +1,4 @@
-class Person < SDBM::ORM::Model
+class Person < SORM::Model
 
   attribute :first_name
   attribute :last_name
