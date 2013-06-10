@@ -3,9 +3,6 @@ module SORM
     module Attributes
 
       def self.included(klass)
-        class << klass
-        end
-
         klass.send(:extend, ClassMethods)
         klass.send(:include, InstanceMethods)
       end
