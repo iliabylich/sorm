@@ -1,4 +1,5 @@
 require 'sorm'
+require 'uuid'
 
 GEM_ROOT = File.expand_path("../../", __FILE__)
 $: << GEM_ROOT

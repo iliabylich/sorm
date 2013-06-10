@@ -13,7 +13,7 @@ module SORM
       module ClassMethods
 
         def attributes
-          @attributes ||= []
+          @attributes ||= [:sorm_id]
         end
 
         def attribute(attr_name, options = {})
@@ -32,6 +32,7 @@ module SORM
             instance_variable_set("@#{attr_name}", value)
           end
         end
+
       end
 
       module InstanceMethods
