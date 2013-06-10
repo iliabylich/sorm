@@ -1,43 +1,61 @@
 module SORM
   module Models
+
+    # This module contains base methods for attribute definition
+    #
     module Attributes
 
+      # Included hook for adding self-methods
+      #
       def self.included(klass)
         klass.send(:extend, ClassMethods)
-        klass.send(:include, InstanceMethods)
       end
 
+      # Module with class methods
+      #
       module ClassMethods
 
+        # Returns list of attributes
+        #
+        # @return [Array<Symbol>]
+        #
         def attributes
           @attributes ||= [:sorm_id]
         end
 
+        # Method for defining attribute
+        #
+        # Defines get and set methods
+        #
+        # @param attr_name [Symbol] name of attribute
+        # @param options [Hash]
+        # @option options [Object] :default
+        #
         def attribute(attr_name, options = {})
           attributes << attr_name
           add_attribute(attr_name, options)
         end
 
+        private
+
+        # @private
+        #
         def add_attribute(attr_name, options)
-          default_value = options[:default]
+          send(:attr_accessor, attr_name)
 
           define_method attr_name do
-            instance_variable_get("@#{attr_name}") || default_value
-          end
-
-          define_method "#{attr_name}=" do |value|
-            instance_variable_set("@#{attr_name}", value)
+            instance_variable_get("@#{attr_name}") || options[:default]
           end
         end
 
       end
 
-      module InstanceMethods
-
-        def attributes
-          self.class.attributes
-        end
-
+      # Returns list of attributes
+      #
+      # @return [Array<Symbol>]
+      #
+      def attributes
+        self.class.attributes
       end
 
     end

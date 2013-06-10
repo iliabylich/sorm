@@ -14,15 +14,6 @@ describe SORM::Models::Persistence do
     record.sorm_id.should eq generated_id
   end
 
-  it "#sorm_attributes" do
-    record.field = "value"
-    expected_result = {
-      :field => "value",
-      :sorm_id => "generatedID"
-    }
-    record.sorm_attributes.should eq expected_result
-  end
-
   context "store" do
 
     before do
@@ -53,6 +44,15 @@ describe SORM::Models::Persistence do
       record = SimpleModel.find(saved_record.sorm_id)
       record.field.should   eq saved_record.field
       record.sorm_id.should eq saved_record.sorm_id
+    end
+
+    it "should parse query" do
+      record2 = SimpleModel.new
+      record2.field = "value2"
+      record2.sorm_id = "another-id"
+      record2.save
+      SimpleModel.where(:field => "value").first.should eq saved_record
+      SimpleModel.where(:field => "value2").first.should eq record2
     end
   end
 
