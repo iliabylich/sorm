@@ -1,7 +1,5 @@
-require "sdbm-orm/version"
-
-module Sdbm
-  module Orm
-    # Your code goes here...
+module SDBM
+  module ORM
+    VERSION = "0.0.1"
   end
 end
