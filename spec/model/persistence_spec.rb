@@ -11,6 +11,8 @@ describe SORM::Models::Persistence do
 
 
   it "#sorm_id" do
+    record.sorm_id.should eq nil
+    record.save
     record.sorm_id.should eq generated_id
   end
 
@@ -22,38 +24,40 @@ describe SORM::Models::Persistence do
       end
       SORM.storage.clear
 
-    end
-
-    let!(:saved_record) do
       record.field = "value"
       record.save
-      record
     end
 
-    it "should fetch records" do
-      SimpleModel.all.count.should eq 1
+    let(:saved_record) { SimpleModel.where(field: "value").first }
+
+    it "#all" do
+      SimpleModel.all.should eq [saved_record]
     end
 
-    it "should find record" do
-      record = SimpleModel.all.first
-      record.field.should   eq saved_record.field
-      record.sorm_id.should eq saved_record.sorm_id
+    it "#first" do
+      SimpleModel.first.should eq saved_record
     end
 
-    it "should find a model" do
-      record = SimpleModel.find(saved_record.sorm_id)
-      record.field.should   eq saved_record.field
-      record.sorm_id.should eq saved_record.sorm_id
+    it "#find" do
+      SimpleModel.find(saved_record.sorm_id).should eq saved_record
     end
 
-    it "should parse query" do
-      record2 = SimpleModel.new
-      record2.field = "value2"
-      record2.sorm_id = "another-id"
-      record2.save
+    it "#where" do
       SimpleModel.where(:field => "value").first.should eq saved_record
-      SimpleModel.where(:field => "value2").first.should eq record2
     end
+
+    context "persisted" do
+
+      it "should be persisted if stored in db" do
+        record.persisted?.should eq true
+      end
+
+      it "should not be persisted if not stored in db" do
+        SimpleModel.new.persisted?.should eq false
+      end
+
+    end
+
   end
 
 

@@ -5,7 +5,7 @@ describe SORM::Models::Attributes do
   subject(:person) { Person.new }
 
   it "should return list of attributes" do
-    person.attributes.should eq [:sorm_id, :first_name, :last_name, :default_name]
+    person.attributes.should eq [:first_name, :last_name, :default_name]
   end
 
   it "should return nil as default attribute" do

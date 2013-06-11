@@ -1,9 +1,3 @@
-class Hash
-  def &(other)
-    reject { |k, v| !(other.include?(k) && other[k] == v) }
-  end
-end
-
 module SORM
   module Models
 
@@ -71,6 +65,14 @@ module SORM
           end
         end
 
+        # Returns first record
+        #
+        # @return [Object]
+        #
+        def first
+          self.all.first
+        end
+
         private
 
         # @private
@@ -79,8 +81,9 @@ module SORM
           parsed_json = JSON.parse(sorm_data)
           self.new.tap do |result|
             parsed_json.each do |attr_name, attr_value|
-              result.send("#{attr_name}=", attr_value)
+              result.public_send("#{attr_name}=", attr_value) if attr_name != "sorm_id"
             end
+            result.send("sorm_id=", parsed_json["sorm_id"])
             result.persist!
           end
         end
@@ -107,22 +110,18 @@ module SORM
       #   # =>  true
       def save
         return if persisted?
+        self.send(:sorm_id=, UUID.generate) unless self.sorm_id
         SORM.storage[sorm_key] = sorm_attributes.to_json
+        @persisted = true
       end
-
-      attr_accessor :sorm_id
 
       # Returns sorm id (internal SORM id)
       # (By default, uses UUID to generate id)
       #
       # @return [String]
       #
-      def sorm_id
-        @sorm_id ||= UUID.generate
-      end
-
-      attr_accessor :persisted
-      alias :persisted? :persisted
+      attr_accessor :sorm_id
+      private :sorm_id=
 
       # Checks for object persistence
       #
@@ -131,6 +130,7 @@ module SORM
       def persisted
         @persisted ||= false
       end
+      alias :persisted? :persisted
 
       # Marks object as persisted
       #
@@ -138,10 +138,10 @@ module SORM
         @persisted = true
       end
 
-      private
+      protected
 
       def sorm_attributes
-        default_attributes = attributes.map { |attribute| [attribute, send(attribute)] }
+        default_attributes = self.class.send(:extended_attributes).map { |attribute| [attribute, send(attribute)] }
         Hash[default_attributes]
       end
 
