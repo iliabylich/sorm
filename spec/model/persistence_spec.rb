@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SORM::Models::Persistence do
+describe SORM::Model::Persistence do
 
   subject(:record) { SimpleModel.new }
   let(:generated_id) { "generatedID" }

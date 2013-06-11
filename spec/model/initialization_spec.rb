@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SORM::Models::Initialization do
+describe SORM::Model::Initialization do
 
   before do
     SORM.storage_config = { database: "/tmp/db" }

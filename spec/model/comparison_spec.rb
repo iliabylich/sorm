@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SORM::Models::Comparison do
+describe SORM::Model::Comparison do
 
   before do
     SORM.storage_config = { database: "/tmp/123" }
