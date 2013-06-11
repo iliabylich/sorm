@@ -23,6 +23,8 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+
+  config.before { SORM.reset_configuration! }
 end
 
 Dir["spec/support/**/*.rb"].each { |f| require f }

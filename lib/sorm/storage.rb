@@ -19,6 +19,7 @@ module SORM
       run_hook(:before_initialize, config)
 
       @config = config
+      raise ::SORM::NotConfigured, "You should configure database path" unless @config.is_a?(Hash) and @config[:database].is_a?(String)
       @db = SDBM.open config[:database]
 
       run_hook(:after_initialize, db)

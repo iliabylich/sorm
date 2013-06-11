@@ -7,8 +7,9 @@ describe SORM::Models::Persistence do
 
   before do
     UUID.stub(:generate => generated_id)
+    SORM.storage_config = { :database => "/tmp/db" }
+    SORM.storage.clear
   end
-
 
   it "#sorm_id" do
     record.sorm_id.should eq nil
@@ -19,16 +20,11 @@ describe SORM::Models::Persistence do
   context "store" do
 
     before do
-      SORM.configure do |config|
-        config.storage_config = { :database => "/tmp/db" }
-      end
-      SORM.storage.clear
-
       record.field = "value"
       record.save
     end
 
-    let(:saved_record) { SimpleModel.where(field: "value").first }
+    let(:saved_record) { SimpleModel.where(:field => "value").first }
 
     it "#all" do
       SimpleModel.all.should eq [saved_record]

@@ -12,7 +12,7 @@ describe SORM::Models::Initialization do
   end
 
   it "should be able to build object passing hash" do
-    r = SimpleModel.new(field: "value")
+    r = SimpleModel.new(:field => "value")
     r.field.should eq "value"
   end
 
