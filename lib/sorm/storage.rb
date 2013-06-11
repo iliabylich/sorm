@@ -19,7 +19,8 @@ module SORM
       run_hook(:before_initialize, config)
 
       @config = config
-      raise ::SORM::NotConfigured, "You should configure database path" unless @config.is_a?(Hash) and @config[:database].is_a?(String)
+      raise ::SORM::NotConfigured, "You should configure database path" unless has_config?
+
       @db = SDBM.open config[:database]
 
       run_hook(:after_initialize, db)
@@ -103,7 +104,7 @@ module SORM
       #   end
       #
       #   SORM::Storage.add_hook_object(BeforeGetHook)
-      #   storage = SORM::Storage.new(:database => "/tmp/temp.db")
+      #   storage = SORM::Storage.new(database: "/tmp/temp.db")
       #   storage.clear
       #   # => "Called before clear"
       #
@@ -138,6 +139,10 @@ module SORM
       self.class.hook_objects.each do |hook_object|
         hook_object.send(hook, *payload)
       end
+    end
+
+    def has_config?
+      @config.is_a?(Hash) and @config[:database].is_a?(String)
     end
 
   end

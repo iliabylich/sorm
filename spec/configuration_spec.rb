@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "SORM::Configuration" do
 
-  let(:storage_config) { { :database => "tmp/db" } }
+  let(:storage_config) { { database: "tmp/db" } }
 
   it "should be able to configure database path" do
     SORM.configure do |config|

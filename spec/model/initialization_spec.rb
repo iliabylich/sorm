@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SORM::Models::Initialization do
 
   before do
-    SORM.storage_config = { :database => "/tmp/db" }
+    SORM.storage_config = { database: "/tmp/db" }
   end
 
   it "should be able to build blank object passing blank hash" do
@@ -12,7 +12,7 @@ describe SORM::Models::Initialization do
   end
 
   it "should be able to build object passing hash" do
-    r = SimpleModel.new(:field => "value")
+    r = SimpleModel.new(field: "value")
     r.field.should eq "value"
   end
 

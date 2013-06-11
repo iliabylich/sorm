@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SORM::Models::Comparison do
 
   before do
-    SORM.storage_config = { :database => "/tmp/123" }
+    SORM.storage_config = { database: "/tmp/123" }
   end
 
   let(:record1) do

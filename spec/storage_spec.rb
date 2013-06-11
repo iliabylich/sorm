@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SORM::Storage do
 
   let(:config) do
-    { :database => "/tmp/sdbm-orm.storage" }
+    { database: "/tmp/sdbm-orm.storage" }
   end
 
   subject(:storage) { SORM::Storage.new(config) }
@@ -66,7 +66,7 @@ describe SORM::Storage do
 
       before do
         SORM::Storage.add_hook_object(hook_object)
-        SDBM.stub(:open => fake_sdbm)
+        SDBM.stub(open: fake_sdbm)
       end
 
       it "#before_initialize" do
