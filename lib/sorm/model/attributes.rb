@@ -8,6 +8,10 @@ module SORM::Model::Attributes
     klass.send(:extend, ClassMethods)
   end
 
+  def attribute(attr_name)
+    send(attr_name)
+  end
+
   # Module with class methods
   #
   module ClassMethods

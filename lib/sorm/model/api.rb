@@ -47,7 +47,8 @@ module SORM::Model::API
     end
 
     def create(options = {})
-      new(options).tap(&:save)
+      r = new(options)
+      r.save
     end
 
     def count

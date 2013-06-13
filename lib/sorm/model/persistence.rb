@@ -67,6 +67,7 @@ module SORM::Model::Persistence
   #   # =>  true
   def save
     return if persisted?
+    return false unless valid?
     self.send(:sorm_id=, SecureRandom.uuid) unless self.sorm_id
     SORM.storage[sorm_key] = sorm_attributes.to_json
     @persisted = true
