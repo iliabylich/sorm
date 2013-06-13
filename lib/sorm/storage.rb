@@ -82,6 +82,16 @@ module SORM
     alias :[] :get
     alias :[]= :set
 
+    # Removes key from storage
+    #
+    # @param key [String]
+    #
+    def delete(key)
+      run_hook(:before_delete)
+      db.delete(key)
+      run_hook(:after_delete)
+    end
+
     class << self
 
       # Returns all hook objects
@@ -117,6 +127,9 @@ module SORM
       #
       #   :before_set
       #   :after_set
+      #
+      #   :before_delete
+      #   :after_delete
       #
       #   :before_clear
       #   :after_clear

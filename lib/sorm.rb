@@ -1,6 +1,6 @@
+require 'securerandom'
+require 'json/ext'
 require 'pry'
-require 'json'
-require 'uuid'
 
 module SORM
   VERSION = "0.0.1"
