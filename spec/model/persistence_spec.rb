@@ -7,8 +7,6 @@ describe SORM::Model::Persistence do
 
   before do
     UUID.stub(generate: generated_id)
-    SORM.storage_config = { database: "/tmp/db" }
-    SORM.storage.clear
   end
 
   it "#sorm_id" do

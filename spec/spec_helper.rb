@@ -23,7 +23,12 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 
-  config.before { SORM.reset_configuration! }
+  config.before do
+    SORM.reset_configuration!
+    SORM.storage_config = { database: "/tmp/storage" }
+    SORM.storage.clear
+  end
+
 end
 
 Dir["spec/support/**/*.rb"].each { |f| require f }

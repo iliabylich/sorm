@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe SORM::Model::Initialization do
 
-  before do
-    SORM.storage_config = { database: "/tmp/db" }
-  end
-
   it "should be able to build blank object passing blank hash" do
     r = SimpleModel.new
     r.field.should be_nil

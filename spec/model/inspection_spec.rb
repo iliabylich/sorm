@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe SORM::Model::Inspection do
 
-  before do
-    SORM.storage_config = { database: "/tmp/db" }
-  end
-
   let(:new_record) { SimpleModel.new(field: "value") }
 
   let(:saved_record) do

@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe SORM::Model::Comparison do
 
-  before do
-    SORM.storage_config = { database: "/tmp/123" }
-  end
-
   let(:record1) do
     SimpleModel.new.tap do |r|
       r.field = "field"

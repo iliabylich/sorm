@@ -10,6 +10,7 @@ module SORM::Configuration
   end
 
   def reset_configuration!
+    @storage_config = nil
     @storage = nil
   end
 end

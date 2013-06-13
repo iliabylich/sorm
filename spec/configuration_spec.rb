@@ -12,7 +12,7 @@ describe "SORM::Configuration" do
   end
 
   it "should raise exception when accessing storage when storage configuration is blank" do
-    SORM.storage_config = nil
+    SORM.reset_configuration!
     expect { SORM.storage }.to raise_error(SORM::NotConfigured)
   end
 
