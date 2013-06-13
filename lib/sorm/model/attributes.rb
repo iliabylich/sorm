@@ -62,4 +62,12 @@ module SORM::Model::Attributes
     self.class.attributes
   end
 
+  def extended_attributes
+    self.class.send(:extended_attributes)
+  end
+
+  def attributes_list
+    Hash[extended_attributes.map { |attr_name| [attr_name, send(attr_name)] }]
+  end
+
 end

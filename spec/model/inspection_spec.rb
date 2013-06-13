@@ -9,9 +9,7 @@ describe SORM::Model::Inspection do
   let(:new_record) { SimpleModel.new(field: "value") }
 
   let(:saved_record) do
-    r = new_record.dup
-    r.save
-    r
+    SimpleModel.new(field: "value").tap(&:save)
   end
 
   context "class" do

@@ -14,8 +14,7 @@ describe SORM::Model::Attributes do
   end
 
   it "should store attributes" do
-    person.first_name = "fname"
-    person.first_name.should eq "fname"
+    Person.new(first_name: "fname").first_name.should eq "fname"
   end
 
 
@@ -25,9 +24,17 @@ describe SORM::Model::Attributes do
     end
 
     it "should return stored value instead of overriden if it present" do
-      person.default_name = "default name 2"
-      person.default_name.should eq "default name 2"
+      Person.new(default_name: "default name 2").default_name.should eq "default name 2"
     end
+  end
+
+  it "#extended_attributes" do
+    Person.new.extended_attributes.should eq [:first_name, :last_name, :default_name, :sorm_id]
+  end
+
+  it "#attributes_list" do
+    expected_data = { first_name: "name", last_name: nil, default_name: "default name", sorm_id: nil }
+    Person.new(first_name: "name").attributes_list.should eq expected_data
   end
 
 end

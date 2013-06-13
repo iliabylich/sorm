@@ -10,4 +10,6 @@ module SORM::Model::Comparison
     other.instance_of?(self.class) and self.sorm_id == other.sorm_id
   end
 
+  alias :eql? ==
+
 end
