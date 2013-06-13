@@ -6,15 +6,21 @@ module SORM::Model::Inspection
 
   module ClassMethods
 
-    def inspect
+    def to_s
       "#{self.name} <[ #{extended_attributes.map(&:to_s).map{|a| ":#{a}" }.join(", ")} ]>"
     end
+
+    alias :inspect :to_s
+    alias :to_str :to_s
 
   end
 
   def to_s
     klass = self.class
-    %Q{#<#{klass}:instance #{klass.send(:extended_attributes).map { |attr_name| "@#{attr_name}=\"#{send(attr_name)}\"" }.join(", ") }>}
+    %Q{#<#{klass.name}:instance #{klass.send(:extended_attributes).map { |attr_name| "@#{attr_name}=\"#{send(attr_name)}\"" }.join(", ") }>}
   end
+
+  alias :inspect :to_s
+  alias :to_str :to_s
 
 end
