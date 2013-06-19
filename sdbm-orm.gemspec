@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
   gem.name          = "sorm"
-  gem.version       = "0.0.1"
+  gem.version       = "1.0.0"
   gem.authors       = ["Ilya Bylich"]
   gem.email         = ["ilya.bylich@productmadness.com"]
   gem.description   = %q{ORM with sdbm as a data storage}

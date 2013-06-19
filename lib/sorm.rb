@@ -5,11 +5,6 @@ require 'pry'
 # SORM is a zero-dependency ORM
 #
 module SORM
-
-  # @private
-  #
-  VERSION = "0.0.1"
-
 end
 
 require 'sorm/configuration'
