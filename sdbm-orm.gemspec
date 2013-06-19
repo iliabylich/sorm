@@ -11,9 +11,9 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{ORM with sdbm as a data storage}
   gem.homepage      = ""
 
-  gem.files         = `git ls-files`.split($/)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
+  gem.files         = Dir["lib/**/*.rb"]
+  gem.executables   = []
+  gem.test_files    = Dir["spec/**/*.rb"]
   gem.require_paths = ["lib"]
 
   gem.add_development_dependency 'rspec'

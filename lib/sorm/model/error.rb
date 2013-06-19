@@ -67,10 +67,6 @@ class SORM::Model::Error
     @_errors ||= {}
   end
 
-  def validations
-    @record.validations
-  end
-
   def each_record_attribute(&block)
     record.attributes.each(&block)
   end
@@ -98,10 +94,6 @@ class SORM::Model::Error
 
   def add_error(attr_name, message)
     _errors[attr_name] = message
-  end
-
-  def has_errors?
-    _errors == {}
   end
 
   def validations_for(attr_name)

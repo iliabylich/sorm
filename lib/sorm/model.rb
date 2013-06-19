@@ -12,6 +12,7 @@
 # @see SORM::Model::Duplication Duplication - methods for record duplication
 # @see SORM::Model::API API - main API module. has methods like create, find, where etc
 # @see SORM::Model::Validation Validation - validation module
+# @see SORM::Model::Association Association - association module
 #
 class SORM::Model
 end
@@ -24,6 +25,7 @@ require 'sorm/model/inspection'
 require 'sorm/model/duplication'
 require 'sorm/model/api'
 require 'sorm/model/validation'
+require 'sorm/model/association'
 
 [
   SORM::Model::Attributes,
@@ -33,7 +35,8 @@ require 'sorm/model/validation'
   SORM::Model::Inspection,
   SORM::Model::Duplication,
   SORM::Model::API,
-  SORM::Model::Validation
+  SORM::Model::Validation,
+  SORM::Model::Association
 ].each do |mod|
   SORM::Model.send(:include, mod)
 end

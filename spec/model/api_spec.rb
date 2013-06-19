@@ -36,6 +36,10 @@ describe SORM::Model::API do
     SimpleModel.where(field: "value2").should eq [record]
   end
 
-
+  it "#last" do
+    r1 = SimpleModel.create(field: "value1")
+    r2 = SimpleModel.create(field: "value2")
+    SimpleModel.last.should eq r2
+  end
 
 end
