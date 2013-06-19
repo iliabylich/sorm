@@ -6,7 +6,7 @@
 
 # SORM
 
-Zero-dependency ORM
+Ruby ORM with sdbm as a data storage
 
 ## Installation
 
@@ -24,7 +24,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+[Here](http://iliabylich.github.io/sorm/)
 
 ## Contributing
 
