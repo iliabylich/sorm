@@ -1,26 +1,67 @@
+# Main class for validation.
+#
+# @see SORM::Model::Validation
+#
 class SORM::Model::Error
 
-  attr_accessor :record, :_errors
+  attr_accessor :record
 
+  # @param record [Object] instance of SORM::Model subclass
+  #
   def initialize(record)
     @record = record
   end
 
+  # Returns errors for passed record
+  #
+  # @return [Hash<Symbol, String>] format: { attribute: "error message" }
+  #
+  # @example
+  #   record = Model.new
+  #   # => <Model @name=nil, @sorm_id=nil>
+  #
+  #   e = SORM::Model::Error.new(record)
+  #
+  #   e.errors
+  #   # => { name: "Can't be blank" }
+  #
   def errors
-    valid?
+    validate
     _errors
   end
 
+  # Returns true if record has no errors
+  #
+  # @return [true, false]
+  #
+  # @example
+  #   class Model
+  #     attribute :name
+  #     validaate :name, presence: true
+  #   end
+  #
+  #   record = Model.new
+  #
+  #   record.valid?
+  #   # => false
+  #
+  #   record.name = "Gena"
+  #   record.valid?
+  #   # => true
+  #
   def valid?
+    errors == {}
+  end
+
+  private
+
+  def validate
     each_validation do |attr_name, attr_value, options, block|
       check_presence(attr_name, attr_value) if options[:presence]
       check_uniqueness(attr_name, attr_value) if options[:uniq]
       check_block(attr_name, attr_value, &block) if block
     end
-    has_errors?
   end
-
-  private
 
   def _errors
     @_errors ||= {}

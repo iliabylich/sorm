@@ -2,23 +2,48 @@
 #
 module SORM::Model::Attributes
 
-  # Included hook for adding self-methods
+  # @private
   #
   def self.included(klass)
     klass.send(:extend, ClassMethods)
   end
 
+  # Returns value of passed attribute name
+  #
+  # @param attr_name [Symbol] name of attribute
+  #
+  # @return [Object] value of attribute
+  #
+  # @example
+  #   class Model < SORM::Model
+  #     attribute :name
+  #   end
+  #
+  #   record = Model.new(name: "Gena")
+  #   # => #<Model @name="Gena">
+  #
+  #   record.attribute(:name)
+  #   # => "Gena"
+  #
   def attribute(attr_name)
     send(attr_name)
   end
 
-  # Module with class methods
+  # Module with Attributes class methods
   #
   module ClassMethods
 
     # Returns list of attributes
     #
     # @return [Array<Symbol>]
+    #
+    # @example
+    #   class Model < SORM::Model
+    #     attribute :name
+    #   end
+    #
+    #   Model.attributes
+    #   # => [:name]
     #
     def attributes
       @attributes ||= []
@@ -32,6 +57,11 @@ module SORM::Model::Attributes
     # @param options [Hash]
     # @option options [Object] :default
     #
+    # @example
+    #   class Model < SORM::Model
+    #     attribute :name
+    #   end
+    #
     def attribute(attr_name, options = {})
       attributes << attr_name
       add_attribute(attr_name, options)
@@ -40,8 +70,6 @@ module SORM::Model::Attributes
 
     protected
 
-    # @private
-    #
     def add_attribute(attr_name, options)
       define_method "#{attr_name}=" do |value|
         instance_variable_set("@#{attr_name}", value)
@@ -58,7 +86,7 @@ module SORM::Model::Attributes
 
   end
 
-  # Returns list of attributes
+  # Returns list of attributes (simply delegates if to class)
   #
   # @return [Array<Symbol>]
   #
@@ -66,12 +94,37 @@ module SORM::Model::Attributes
     self.class.attributes
   end
 
-  def extended_attributes
-    self.class.send(:extended_attributes)
-  end
-
+  # Returns hash representation of record
+  #
+  # @return [Hash] hash of attributes
+  #
+  # @example
+  #   class Model < SORM::Model
+  #     attribute :name
+  #   end
+  #
+  #   record = Model.new(name: "Gena")
+  #   # => #<Model @name="Gena" @sorm_id=nil>
+  #
+  #   record.attributes_list
+  #   # => { name: "Gena", sorm_id: nil }
+  #
+  #   record.save
+  #   # => true
+  #
+  #   record.attributes_list
+  #   # => { name: "Gena", sorm_id: "some-generated-id" }
+  #
   def attributes_list
     Hash[extended_attributes.map { |attr_name| [attr_name, send(attr_name)] }]
+  end
+
+  alias :to_h :attributes_list
+
+  protected
+
+  def extended_attributes
+    self.class.send(:extended_attributes)
   end
 
 end

@@ -1,3 +1,18 @@
+# Model class
+#
+# @example Usage:
+#   class MyModel < SORM::Model
+#   end
+#
+# @see SORM::Model::Attributes Attributes - methods for attributes definition
+# @see SORM::Model::Persistence Persistence - base methods for storing, destroying, updating and finding
+# @see SORM::Model::Comparison Comparison - methods for comparing records
+# @see SORM::Model::Initialization Initialization - methods for record initialization
+# @see SORM::Model::Inspection Inspection - methods for records displaying
+# @see SORM::Model::Duplication Duplication - methods for record duplication
+# @see SORM::Model::API API - main API module. has methods like create, find, where etc
+# @see SORM::Model::Validation Validation - validation module
+#
 class SORM::Model
 end
 

@@ -92,14 +92,21 @@ module SORM::Model::Persistence
 
   # Marks object as persisted
   #
+  # @see #persisted
+  #
   def persist!
     @persisted = true
   end
 
+  # Removes method from storage
+  #
+  # @return [Object] return self
+  #
   def delete
     SORM.storage.delete(sorm_key)
     @persisted = false
     @sorm_id = nil
+    self
   end
 
   protected

@@ -1,5 +1,2 @@
-module SORM
-
-  class NotConfigured < StandardError; end
-
-end
+# @private
+class SORM::NotConfigured < StandardError; end

@@ -28,10 +28,6 @@ describe SORM::Model::Attributes do
     end
   end
 
-  it "#extended_attributes" do
-    Person.new.extended_attributes.should eq [:first_name, :last_name, :default_name, :sorm_id]
-  end
-
   it "#attributes_list" do
     expected_data = { first_name: "name", last_name: nil, default_name: "default name", sorm_id: nil }
     Person.new(first_name: "name").attributes_list.should eq expected_data
