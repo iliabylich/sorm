@@ -1,6 +1,12 @@
-# Sdbm::Orm
+[![Build Status](https://travis-ci.org/iliabylich/sorm.png?branch=master)](https://travis-ci.org/iliabylich/sorm)
+[![Code Climate](https://codeclimate.com/github/iliabylich/sorm.png)](https://codeclimate.com/github/iliabylich/sorm)
+[![Coverage Status](https://coveralls.io/repos/iliabylich/sorm/badge.png)](https://coveralls.io/r/iliabylich/sorm)
+[![Dependency Status](https://gemnasium.com/iliabylich/sorm.png)](https://gemnasium.com/iliabylich/sorm)
+[![Gem Version](https://badge.fury.io/rb/sorm.png)](https://rubygems.org/gems/sorm)
 
-TODO: Write a gem description
+# SORM
+
+Zero-dependency ORM
 
 ## Installation
 
