@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Sorm by iliabylich</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Sorm</h1>
+        <p>Ruby ORM with sdbm as a data storage</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/iliabylich/sorm" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/iliabylich/sorm/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/iliabylich/sorm/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <p>
+          <p><a href='https://travis-ci.org/iliabylich/sorm'><img alt='Build Status' src='https://travis-ci.org/iliabylich/sorm.png?branch=master' /></a> <a href='https://codeclimate.com/github/iliabylich/sorm'><img alt='Code Climate' src='https://codeclimate.com/github/iliabylich/sorm.png' /></a> <a href='https://coveralls.io/r/iliabylich/sorm'><img alt='Coverage Status' src='https://coveralls.io/repos/iliabylich/sorm/badge.png' /></a> <a href='https://gemnasium.com/iliabylich/sorm'><img alt='Dependency Status' src='https://gemnasium.com/iliabylich/sorm.png' /></a> <a href='https://rubygems.org/gems/sorm'><img alt='Gem Version' src='https://badge.fury.io/rb/sorm.png' /></a></p>
+
+<h1 id='sorm'>SORM</h1>
+
+<p>Ruby ORM with <a href='http://www.ruby-doc.org/stdlib-2.0/libdoc/sdbm/rdoc/SDBM.html'>sdbm</a> as a data storage</p>
+
+<h2 id='installation'>Installation</h2>
+
+<p>Add this line to your application&#8217;s Gemfile:</p>
+
+<pre><code>gem &#39;sorm&#39;</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install sorm</code></pre>
+
+<h2 id='configuration'>Configuration</h2>
+
+<p>First of all, require it in your source code (if you are not using Rails)</p>
+<div class='highlight'><pre><code class='ruby'><span class='nb'>require</span> <span class='s1'>&#39;sorm&#39;</span>
+</code></pre></div><div class='highlight'><pre><code class='ruby'><span class='no'>SORM</span><span class='o'>.</span><span class='n'>configure</span> <span class='k'>do</span> <span class='o'>|</span><span class='n'>config</span><span class='o'>|</span>
+  <span class='n'>config</span><span class='o'>.</span><span class='n'>storage_config</span> <span class='o'>=</span> <span class='p'>{</span>
+    <span class='ss'>database</span><span class='p'>:</span> <span class='s2'>&quot;/tmp/path_to_your_db&quot;</span>
+  <span class='p'>}</span>
+<span class='k'>end</span>
+</code></pre></div>
+<h2 id='definition'>Definition</h2>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Person</span> <span class='o'>&lt;</span> <span class='ss'>SORM</span><span class='p'>:</span><span class='ss'>:Model</span>
+  <span class='n'>attribute</span> <span class='ss'>:first_name</span>
+  <span class='n'>attribute</span> <span class='ss'>:last_name</span>
+<span class='k'>end</span>
+</code></pre></div>
+<h2 id='base_usage'>Base usage</h2>
+<div class='highlight'><pre><code class='ruby'><span class='nb'>p</span> <span class='o'>=</span> <span class='no'>Person</span><span class='o'>.</span><span class='n'>new</span><span class='p'>(</span><span class='n'>first_name</span><span class='p'>:</span> <span class='s2'>&quot;Krokodil&quot;</span><span class='p'>,</span> <span class='n'>last_name</span><span class='p'>:</span> <span class='s2'>&quot;Gena&quot;</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Person:instance @first_name=&quot;Krokodil&quot;, @last_name=&quot;Gena&quot;, @sorm_id=nil&gt;</span>
+
+<span class='nb'>p</span><span class='o'>.</span><span class='n'>save</span>
+<span class='o'>=&gt;</span> <span class='kp'>true</span>
+
+<span class='no'>Person</span><span class='o'>.</span><span class='n'>create</span><span class='p'>(</span><span class='n'>first_name</span><span class='p'>:</span> <span class='s2'>&quot;Krokodil&quot;</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Person:instance @first_name=&quot;Krokodil&quot;, @last_name=nil, @sorm_id=&quot;some-long-generated-id&quot;&gt;</span>
+</code></pre></div>
+<h2 id='validatation'>Validatation</h2>
+
+<ul>
+<li>Presence</li>
+</ul>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Person</span> <span class='o'>&lt;</span> <span class='ss'>SORM</span><span class='p'>:</span><span class='ss'>:Model</span>
+  <span class='n'>attribute</span> <span class='ss'>:name</span>
+
+  <span class='n'>validate</span> <span class='ss'>:name</span><span class='p'>,</span> <span class='ss'>presence</span><span class='p'>:</span> <span class='kp'>true</span>
+<span class='k'>end</span>
+
+<span class='no'>Person</span><span class='o'>.</span><span class='n'>new</span><span class='o'>.</span><span class='n'>valid?</span>
+<span class='o'>=&gt;</span> <span class='kp'>false</span>
+
+<span class='no'>Person</span><span class='o'>.</span><span class='n'>new</span><span class='o'>.</span><span class='n'>errors</span>
+<span class='o'>=&gt;</span> <span class='p'>{</span> <span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Can&#39;t be blank&quot;</span> <span class='p'>}</span>
+</code></pre></div>
+<ul>
+<li>Uniquiness</li>
+</ul>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Person</span> <span class='o'>&lt;</span> <span class='ss'>SORM</span><span class='p'>:</span><span class='ss'>:Model</span>
+  <span class='n'>attribute</span> <span class='ss'>:name</span>
+
+  <span class='n'>validate</span> <span class='ss'>:name</span><span class='p'>,</span> <span class='ss'>uniq</span><span class='p'>:</span> <span class='kp'>true</span>
+<span class='k'>end</span>
+
+<span class='no'>Person</span><span class='o'>.</span><span class='n'>create</span><span class='p'>(</span><span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Gena&quot;</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='kp'>true</span>
+<span class='no'>Person</span><span class='o'>.</span><span class='n'>create</span><span class='p'>(</span><span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Gena&quot;</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='kp'>false</span>
+<span class='no'>Person</span><span class='o'>.</span><span class='n'>new</span><span class='p'>(</span><span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Gena&quot;</span><span class='p'>)</span><span class='o'>.</span><span class='n'>valid?</span>
+<span class='o'>=&gt;</span> <span class='kp'>false</span>
+<span class='no'>Person</span><span class='o'>.</span><span class='n'>new</span><span class='p'>(</span><span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Gena&quot;</span><span class='p'>)</span><span class='o'>.</span><span class='n'>errors</span>
+<span class='o'>=&gt;</span> <span class='p'>{</span> <span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Should be uniq&quot;</span> <span class='p'>}</span>
+</code></pre></div>
+<ul>
+<li>Custom validation</li>
+</ul>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Person</span> <span class='o'>&lt;</span> <span class='ss'>SORM</span><span class='p'>:</span><span class='ss'>:Model</span>
+  <span class='n'>attribute</span> <span class='ss'>:name</span>
+
+  <span class='n'>validate</span> <span class='ss'>:name</span> <span class='k'>do</span> <span class='o'>|</span><span class='n'>record</span><span class='o'>|</span>
+    <span class='n'>record</span><span class='o'>.</span><span class='n'>name</span> <span class='o'>=~</span> <span class='s2'>&quot;Gena&quot;</span>
+  <span class='k'>end</span>
+<span class='k'>end</span>
+
+<span class='no'>Person</span><span class='o'>.</span><span class='n'>create</span><span class='p'>(</span><span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Gena&quot;</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='kp'>true</span>
+<span class='no'>Person</span><span class='o'>.</span><span class='n'>create</span><span class='p'>(</span><span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Vasya&quot;</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='kp'>false</span>
+<span class='no'>Person</span><span class='o'>.</span><span class='n'>new</span><span class='p'>(</span><span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Vasya&quot;</span><span class='p'>)</span><span class='o'>.</span><span class='n'>valid?</span>
+<span class='o'>=&gt;</span> <span class='kp'>false</span>
+<span class='no'>Person</span><span class='o'>.</span><span class='n'>new</span><span class='p'>(</span><span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Vasya&quot;</span><span class='p'>)</span><span class='o'>.</span><span class='n'>errors</span>
+<span class='o'>=&gt;</span> <span class='p'>{</span> <span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Validation block returns false-value&quot;</span> <span class='p'>}</span>
+</code></pre></div>
+<h2 id='associations'>Associations</h2>
+
+<ul>
+<li>One-to-one</li>
+</ul>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>User</span> <span class='o'>&lt;</span> <span class='ss'>SORM</span><span class='p'>:</span><span class='ss'>:Model</span>
+  <span class='n'>has_one</span> <span class='ss'>:profile</span><span class='p'>,</span> <span class='ss'>class</span><span class='p'>:</span> <span class='s2'>&quot;Profile&quot;</span>
+<span class='k'>end</span>
+
+<span class='k'>class</span> <span class='nc'>Profile</span> <span class='o'>&lt;</span> <span class='ss'>SORM</span><span class='p'>:</span><span class='ss'>:Model</span>
+  <span class='n'>belongs_to</span> <span class='ss'>:user</span><span class='p'>,</span> <span class='ss'>class</span><span class='p'>:</span> <span class='s2'>&quot;User&quot;</span>
+<span class='k'>end</span>
+
+<span class='n'>u</span> <span class='o'>=</span> <span class='no'>User</span><span class='o'>.</span><span class='n'>create</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;User:instance @sorm_id=&quot;some-user-id&quot;&gt;</span>
+<span class='no'>Profile</span><span class='o'>.</span><span class='n'>create</span><span class='p'>(</span><span class='n'>user_id</span><span class='p'>:</span> <span class='n'>u</span><span class='o'>.</span><span class='n'>sorm_id</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Profile:instance @sorm_id=&quot;some-profile-id&quot;, @user_id=&quot;some-user-id&quot;&gt;</span>
+<span class='n'>u</span><span class='o'>.</span><span class='n'>profile</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Profile:instance @sorm_id=&quot;some-profile-id&quot;, @user_id=&quot;some-user-id&quot;&gt;</span>
+</code></pre></div>
+<ul>
+<li>One-to-many</li>
+</ul>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Profile</span> <span class='o'>&lt;</span> <span class='ss'>SORM</span><span class='p'>:</span><span class='ss'>:Model</span>
+  <span class='n'>has_many</span> <span class='ss'>:companies</span><span class='p'>,</span> <span class='ss'>class</span><span class='p'>:</span> <span class='s2'>&quot;Company&quot;</span>
+<span class='k'>end</span>
+
+<span class='k'>class</span> <span class='nc'>Company</span> <span class='o'>&lt;</span> <span class='ss'>SORM</span><span class='p'>:</span><span class='ss'>:Model</span>
+  <span class='n'>belongs_to</span> <span class='ss'>:profile</span><span class='p'>,</span> <span class='ss'>class</span><span class='p'>:</span> <span class='s2'>&quot;Profile&quot;</span>
+<span class='k'>end</span>
+
+<span class='nb'>p</span> <span class='o'>=</span> <span class='no'>Profile</span><span class='o'>.</span><span class='n'>create</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Profile:instance @sorm_id=&quot;some-profile-id&quot;&gt;</span>
+<span class='no'>Company</span><span class='o'>.</span><span class='n'>create</span><span class='p'>(</span><span class='n'>profile_id</span><span class='p'>:</span> <span class='nb'>p</span><span class='o'>.</span><span class='n'>sorm_id</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Company:instance @sorm_id=&quot;some-company-id&quot;, @profile_id=&quot;some-profile-id&quot;&gt;</span>
+<span class='no'>Company</span><span class='o'>.</span><span class='n'>create</span><span class='p'>(</span><span class='n'>profile_id</span><span class='p'>:</span> <span class='nb'>p</span><span class='o'>.</span><span class='n'>sorm_id</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Company:instance @sorm_id=&quot;some-company-id2&quot;, @profile_id=&quot;some-profile-id&quot;&gt;</span>
+<span class='nb'>p</span><span class='o'>.</span><span class='n'>companies</span>
+<span class='o'>=&gt;</span> <span class='o'>[</span>
+  <span class='c1'>#&lt;Company:instance @sorm_id=&quot;some-company-id&quot;, @profile_id=&quot;some-profile-id&quot;&gt;,</span>
+  <span class='c1'>#&lt;Company:instance @sorm_id=&quot;some-company-id2&quot;, @profile_id=&quot;some-profile-id&quot;&gt;</span>
+<span class='o'>]</span>
+</code></pre></div>
+<h2 id='api'>API</h2>
+<div class='highlight'><pre><code class='ruby'><span class='c1'># class-methods</span>
+<span class='no'>Profile</span><span class='o'>.</span><span class='n'>first</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Profile:instance ... &gt;</span>
+<span class='no'>Profile</span><span class='o'>.</span><span class='n'>last</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Profile:instance ... &gt;</span>
+<span class='no'>Profile</span><span class='o'>.</span><span class='n'>find</span><span class='p'>(</span><span class='s2'>&quot;some-sorm-id&quot;</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Profile:instance @sorm_id=&quot;some-sorm-id&quot; ... &gt;</span>
+<span class='no'>Profile</span><span class='o'>.</span><span class='n'>where</span><span class='p'>(</span><span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Gena&quot;</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='o'>[</span><span class='c1'>#&lt;Profile:instance @name=&quot;Gena&quot; ...&gt;, #&lt;Profile:instance @name=&quot;Gena&quot; ... &gt;]</span>
+<span class='no'>Profile</span><span class='o'>.</span><span class='n'>count</span>
+<span class='o'>=&gt;</span> <span class='mi'>10</span>
+
+<span class='c1'># instance-methods</span>
+<span class='nb'>p</span> <span class='o'>=</span> <span class='no'>Profile</span><span class='o'>.</span><span class='n'>create</span><span class='p'>(</span><span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Gena&quot;</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Profile:instance @name=&quot;Gena&quot;, @sorm_id=&quot;some-generated-id&quot;&gt;</span>
+
+<span class='nb'>p</span><span class='o'>.</span><span class='n'>update</span><span class='p'>(</span><span class='nb'>name</span><span class='p'>:</span> <span class='s2'>&quot;Vasya&quot;</span><span class='p'>)</span>
+<span class='o'>=&gt;</span> <span class='c1'>#&lt;Profile:instance @name=&quot;Vasya&quot;, @sorm_id=&quot;some-generated-id&quot;&gt;</span>
+</code></pre></div>
+<h2 id='documentation'>Documentation</h2>
+
+<p>Your can also check documentation for <a href='http://rubydoc.info/gems/sorm/1.0.0/frames'>SORM</a>.</p>
+
+<h2 id='testing'>Testing</h2>
+
+<p>SORM has <a href='https://coveralls.io/r/iliabylich/sorm'>100% coverage</a> for 1.9.2, 1.9.3, 2.0.0 and rbx (you can check <a href='https://travis-ci.org/iliabylich/sorm'>Travis</a>) It doesn&#8217;t work on jruby (because jruby don&#8217;t have sdbm)</p>
+
+<h2 id='dependencies'>Dependencies</h2>
+
+<p>SORM has <a href='https://gemnasium.com/iliabylich/sorm'>no</a> dependencies. It was written on pure Ruby.</p>
+
+<h2 id='contributing'>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+
+<li>Commit your changes (<code>git commit -am &#39;Add some feature&#39;</code>)</li>
+
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+
+<li>Create new Pull Request</li>
+</ol>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/iliabylich">iliabylich</a></p>
+        <p><small>Hosted on GitHub Pages</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>

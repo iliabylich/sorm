@@ -1,95 +1,12 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Sorm by iliabylich</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/main.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+---
+layout: default
+title: SORM
+---
 
-  </head>
-  <body>
-
-      <header>
-        <h1>Sorm</h1>
-        <p>Ruby ORM with sdbm as a data storage</p>
-      </header>
-
-      <div id="banner">
-        <span id="logo"></span>
-
-        <a href="https://github.com/iliabylich/sorm" class="button fork"><strong>View On GitHub</strong></a>
-        <div class="downloads">
-          <span>Downloads:</span>
-          <ul>
-            <li><a href="https://github.com/iliabylich/sorm/zipball/master" class="button">ZIP</a></li>
-            <li><a href="https://github.com/iliabylich/sorm/tarball/master" class="button">TAR</a></li>
-          </ul>
-        </div>
-      </div><!-- end banner -->
-
-    <div class="wrapper">
-      <nav>
-        <ul></ul>
-      </nav>
-      <section>
-        <p><a href="https://travis-ci.org/iliabylich/sorm"><img src="https://travis-ci.org/iliabylich/sorm.png?branch=master" alt="Build Status"></a>
-<a href="https://codeclimate.com/github/iliabylich/sorm"><img src="https://codeclimate.com/github/iliabylich/sorm.png" alt="Code Climate"></a>
-<a href="https://coveralls.io/r/iliabylich/sorm"><img src="https://coveralls.io/repos/iliabylich/sorm/badge.png" alt="Coverage Status"></a>
-<a href="https://gemnasium.com/iliabylich/sorm"><img src="https://gemnasium.com/iliabylich/sorm.png" alt="Dependency Status"></a>
-<a href="https://rubygems.org/gems/sorm"><img src="https://badge.fury.io/rb/sorm.png" alt="Gem Version"></a></p>
-
-<h1>
-<a name="sorm" class="anchor" href="#sorm"><span class="octicon octicon-link"></span></a>SORM</h1>
-
-<p>Zero-dependency ORM</p>
-
-<h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
-
-<p>Add this line to your application's Gemfile:</p>
-
-<pre><code>gem 'sorm'
-</code></pre>
-
-<p>And then execute:</p>
-
-<pre><code>$ bundle
-</code></pre>
-
-<p>Or install it yourself as:</p>
-
-<pre><code>$ gem install sorm
-</code></pre>
-
-<h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
-
-<p>TODO: Write usage instructions here</p>
-
-<h2>
-<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
-
-<ol>
-<li>Fork it</li>
-<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
-<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
-<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
-<li>Create new Pull Request</li>
-</ol>
-      </section>
-      <footer>
-        <p>Project maintained by <a href="https://github.com/iliabylich">iliabylich</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
-      </footer>
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
-  </body>
-</html>
+<div id="home">
+  <ul class="posts">
+    {% for post in site.posts %}
+      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
