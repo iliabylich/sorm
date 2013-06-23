@@ -13,6 +13,7 @@
 # @see SORM::Model::API API - main API module. has methods like create, find, where etc
 # @see SORM::Model::Validation Validation - validation module
 # @see SORM::Model::Association Association - association module
+# @see SORM::Model::TypeCasting TypeCasting - type casting module
 #
 class SORM::Model
 end
@@ -26,6 +27,7 @@ require 'sorm/model/duplication'
 require 'sorm/model/api'
 require 'sorm/model/validation'
 require 'sorm/model/association'
+require 'sorm/model/type_casting'
 
 [
   SORM::Model::Attributes,
@@ -36,7 +38,8 @@ require 'sorm/model/association'
   SORM::Model::Duplication,
   SORM::Model::API,
   SORM::Model::Validation,
-  SORM::Model::Association
+  SORM::Model::Association,
+  SORM::Model::TypeCasting
 ].each do |mod|
   SORM::Model.send(:include, mod)
 end
