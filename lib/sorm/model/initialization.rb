@@ -16,6 +16,8 @@ module SORM::Model::Initialization
     options.each do |key, value|
       public_send("#{key}=", value) if respond_to?("#{key}=")
     end
+
+    run_hooks(:after, :initialize)
   end
 
 end

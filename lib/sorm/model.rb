@@ -18,6 +18,7 @@
 class SORM::Model
 end
 
+require 'sorm/model/hooks'
 require 'sorm/model/attributes'
 require 'sorm/model/persistence'
 require 'sorm/model/comparison'
@@ -30,6 +31,7 @@ require 'sorm/model/association'
 require 'sorm/model/type_casting'
 
 [
+  SORM::Model::Hooks,
   SORM::Model::Attributes,
   SORM::Model::Persistence,
   SORM::Model::Comparison,
@@ -39,7 +41,7 @@ require 'sorm/model/type_casting'
   SORM::Model::API,
   SORM::Model::Validation,
   SORM::Model::Association,
-  SORM::Model::TypeCasting
+  SORM::Model::TypeCasting,
 ].each do |mod|
   SORM::Model.send(:include, mod)
 end

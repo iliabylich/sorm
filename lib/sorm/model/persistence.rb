@@ -69,7 +69,9 @@ module SORM::Model::Persistence
     return if persisted?
     return false unless valid?
     self.send(:sorm_id=, SecureRandom.uuid) unless self.sorm_id
+    run_hooks(:before, :save)
     SORM.storage[sorm_key] = sorm_attributes.to_json
+    run_hooks(:after, :save)
     @persisted = true
   end
 
@@ -103,7 +105,9 @@ module SORM::Model::Persistence
   # @return [Object] return self
   #
   def delete
+    run_hooks(:before, :delete)
     SORM.storage.delete(sorm_key)
+    run_hooks(:after, :delete)
     @persisted = false
     @sorm_id = nil
     self

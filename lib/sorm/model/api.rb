@@ -155,9 +155,11 @@ module SORM::Model::API
   #   # => [#<Model @firt_name="Cheburashka", @sorm_id="some-id">]
   #
   def update(options = {})
+    run_hooks(:before, :update)
     options.each do |key, value|
       send("#{key}=", value)
     end
+    run_hooks(:after, :update)
     @persisted = false
     save
   end
