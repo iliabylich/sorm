@@ -1,0 +1,7 @@
+class <%= klass.capitalize %> < SORM::Model
+<% if fields -%>
+<% fields.each do |field| %>
+  attribute :<%= field %>
+<% end %>
+<% end %>
+end

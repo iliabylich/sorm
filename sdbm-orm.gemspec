@@ -11,8 +11,8 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{ORM with sdbm as a data storage}
   gem.homepage      = ""
 
-  gem.files         = Dir["lib/**/*.rb"]
-  gem.executables   = []
+  gem.files         = Dir["lib/**/*"]
+  gem.executables   = ["sorm"]
   gem.test_files    = Dir["spec/**/*.rb"]
   gem.require_paths = ["lib"]
 
